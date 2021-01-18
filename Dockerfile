@@ -120,6 +120,36 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /us
 RUN gcc -v
 # <-- rber gcc-9
 
+# --> rber additional stuff needed
+#RUN apt-get install -y thefuck python3-pkg-resources
+# for depmod - should come from SDK:
+# RUN apt-get intstall -y kmod
+########################
+# for kernel sphinx doc from my sdk container:
+#
+# to build the kernel doc manually in my docker container:
+# sudo apt-get install -y python3-pip python3-venv
+# sudo apt-get install -y imagemagick graphviz dvipng fonts-noto-cjk latexmk librsvg2-bin
+# sudo bash -c 'DEBIAN_FRONTEND=noninteractive apt-get -y install texlive-xetex'
+#
+# cd ${HOME}/imx6q-phytec-mira-rdk-nand
+# rm -rf sphinx_2.4.4
+# cd ${HOME}/imx6q-phytec-mira-rdk-nand/linux-stable
+# ./scripts/sphinx-pre-install
+#
+# /usr/bin/python3 -m venv sphinx_2.4.4
+# . sphinx_2.4.4/bin/activate
+#
+# !!! Dependency is missing !!!
+#
+# pip install six
+#
+# make htmldocs
+#
+# deactivate
+#######################
+# <-- rber additional stuff needed
+
 # We remove the user because we add a new one of our own.
 # The usersetup user is solely for adding a new user that has the same uid,
 # as the workspace. 70 is an arbitrary *low* unused uid on debian.
