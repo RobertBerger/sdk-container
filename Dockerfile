@@ -120,6 +120,10 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /us
 RUN gcc -v
 # <-- rber gcc-9
 
+# --> stuff needed to compile kernel and u-boot
+RUN apt-get -y install libncurses-dev libncursesw5-dev flex bison libssl-dev bc libncurses-dev ccache
+# <-- stuff needed to compile kernel and u-boot
+
 # --> rber additional stuff needed
 #RUN apt-get install -y thefuck python3-pkg-resources
 # for depmod - should come from SDK:
