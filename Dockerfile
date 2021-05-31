@@ -125,6 +125,7 @@ RUN apt-get -y install libncurses-dev libncursesw5-dev flex bison libssl-dev bc 
 # <-- stuff needed to compile kernel and u-boot
 
 # --> rber additional stuff needed
+RUN apt-get install -y thefuck python3-pkg-resources python-setuptools
 #RUN apt-get install -y thefuck python3-pkg-resources
 # for depmod - should come from SDK:
 # RUN apt-get intstall -y kmod
