@@ -18,9 +18,13 @@
 #
 #FROM crops/yocto:ubuntu-16.04-base
 #FROM reliableembeddedsystems/yocto:ubuntu-18.04-base
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 USER root
+
+RUN apt-get update
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 RUN apt-get update && \
     apt-get install -y \
@@ -103,10 +107,10 @@ RUN apt-get -y install tree
 # <-- rber
 
 # --> rber gcc-9
-RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
+#RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common
 #python-software-properties
-RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y && apt-get update
-RUN apt-get install -y gcc g++ gcc-9 g++-9
+#RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y && apt-get update
+#RUN apt-get install -y gcc g++ gcc-9 g++-9
 #RUN update-alternatives --remove-all gcc
  # --> libstdc++
  # we need a libstdc++6 for this to work:
@@ -116,8 +120,8 @@ RUN apt-get install -y gcc g++ gcc-9 g++-9
  # fix? https://www.yoctoproject.org/pipermail/yocto/2019-April/044995.html
  #      https://www.yoctoproject.org/pipermail/yocto/2016-November/033134.html
  # <-- libstdc++
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9
-RUN gcc -v
+#RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+#RUN gcc -v
 # <-- rber gcc-9
 
 # --> stuff needed to compile kernel and u-boot
@@ -129,6 +133,30 @@ RUN apt-get install -y thefuck python3-pkg-resources python-setuptools
 #RUN apt-get install -y thefuck python3-pkg-resources
 # for depmod - should come from SDK:
 # RUN apt-get intstall -y kmod
+
+# --> rber repo @@@TODO
+# repo is not a package for ub20 
+#RUN apt-get install -y repo
+# update repo for python3
+COPY usr/bin/repo /usr/bin/repo
+# <-- rber repo
+
+# --> rber icecc
+RUN apt-get install -y icecc
+# <-- rber icecc
+
+# --> rber icecream-sundae
+RUN apt-get install -y g++ libcap-ng-dev libglib2.0-dev libicecc-dev liblzo2-dev libncursesw5-dev meson ninja-build
+RUN mkdir -p ~/projects/icecream-sundae && \
+    git clone git://github.com/JPEWdev/icecream-sundae.git && \
+    cd icecream-sundae/ && \
+    mkdir builddir && \
+    cd builddir/ && \
+    meson .. --buildtype release && \
+    ninja && \
+    ninja install
+# <-- rber icecream-sundae
+
 ########################
 # for kernel sphinx doc from my sdk container:
 #
