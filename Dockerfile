@@ -18,7 +18,7 @@
 #
 #FROM crops/yocto:ubuntu-16.04-base
 #FROM reliableembeddedsystems/yocto:ubuntu-18.04-base
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 USER root
 
@@ -148,7 +148,7 @@ RUN apt-get install -y icecc
 # --> rber icecream-sundae
 RUN apt-get install -y g++ libcap-ng-dev libglib2.0-dev libicecc-dev liblzo2-dev libncursesw5-dev meson ninja-build
 RUN mkdir -p ~/projects/icecream-sundae && \
-    git clone git://github.com/JPEWdev/icecream-sundae.git && \
+    git clone https://github.com/JPEWdev/icecream-sundae.git && \
     cd icecream-sundae/ && \
     mkdir builddir && \
     cd builddir/ && \
